@@ -152,7 +152,7 @@ var NKDatetime = /** @class */ (function () {
                 }
                 var newDate = new Date(_this.date.getFullYear(), _this.date.getMonth(), _this.date.getDate(), hours, e.time.minutes, e.time.seconds);
                 _this.date = newDate;
-                _this.onChange(newDate);
+                _this.onChange(_this.date);
             });
         }
         else if (this.timepickerOptions === false) {
