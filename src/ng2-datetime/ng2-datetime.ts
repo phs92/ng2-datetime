@@ -215,10 +215,10 @@ export class NKDatetime implements ControlValueAccessor, AfterViewInit, OnDestro
                         this.updateDatepicker(this.date);
                     }
 
-                    this.date.setHours(hours);
-                    this.date.setMinutes(e.time.minutes);
-                    this.date.setSeconds(e.time.seconds);
-                    this.onChange(this.date);
+                    let newDate = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate(),
+                        hours, e.time.minutes, e.time.seconds);
+                    this.date = newDate;
+                    this.onChange(newDate);
                 });
         } else if (this.timepickerOptions === false) {
             (<any>$('#' + this.idTimePicker)).parent().remove();
