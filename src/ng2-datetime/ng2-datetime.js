@@ -16,7 +16,7 @@ var CUSTOM_ACCESSOR = {
     useExisting: core_1.forwardRef(function () { return NKDatetime; }),
     multi: true
 };
-var NKDatetime = (function () {
+var NKDatetime = /** @class */ (function () {
     function NKDatetime() {
         this.timepickerOptions = {};
         this.datepickerOptions = {};
@@ -150,10 +150,9 @@ var NKDatetime = (function () {
                     _this.date = new Date();
                     _this.updateDatepicker(_this.date);
                 }
-                _this.date.setHours(hours);
-                _this.date.setMinutes(e.time.minutes);
-                _this.date.setSeconds(e.time.seconds);
-                _this.onChange(_this.date);
+                var newDate = new Date(_this.date.getFullYear(), _this.date.getMonth(), _this.date.getDate(), hours, e.time.minutes, e.time.seconds);
+                _this.date = newDate;
+                _this.onChange(newDate);
             });
         }
         else if (this.timepickerOptions === false) {
@@ -188,51 +187,51 @@ var NKDatetime = (function () {
     NKDatetime.prototype.pad = function (value) {
         return value.toString().length < 2 ? '0' + value : value.toString();
     };
+    __decorate([
+        core_1.Input('timepicker'),
+        __metadata("design:type", Object)
+    ], NKDatetime.prototype, "timepickerOptions", void 0);
+    __decorate([
+        core_1.Input('datepicker'),
+        __metadata("design:type", Object)
+    ], NKDatetime.prototype, "datepickerOptions", void 0);
+    __decorate([
+        core_1.Input('hasClearButton'),
+        __metadata("design:type", Boolean)
+    ], NKDatetime.prototype, "hasClearButton", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], NKDatetime.prototype, "readonly", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], NKDatetime.prototype, "required", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", String)
+    ], NKDatetime.prototype, "tabindex", void 0);
+    __decorate([
+        core_1.HostListener('blur'),
+        __metadata("design:type", Object)
+    ], NKDatetime.prototype, "onTouched", void 0);
+    __decorate([
+        core_1.HostBinding('attr.tabindex'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [])
+    ], NKDatetime.prototype, "tabindexAttr", null);
+    NKDatetime = __decorate([
+        core_1.Component({
+            selector: 'datetime',
+            providers: [CUSTOM_ACCESSOR],
+            template: "\n        <div class=\"ng2-datetime\">\n            <div [ngClass]=\"{ 'input-group': !datepickerOptions.hideIcon, 'date': true }\">\n                <input id=\"{{idDatePicker}}\" type=\"text\" class=\"form-control\"\n                       [attr.readonly]=\"readonly\"\n                       [attr.required]=\"required\"\n                       [attr.placeholder]=\"datepickerOptions.placeholder || 'Choose date'\"\n                       [attr.tabindex]=\"tabindex\"\n                       [(ngModel)]=\"dateModel\"\n                       (blur)=\"onTouched()\"\n                       (keyup)=\"checkEmptyValue($event)\"/>\n                <div [hidden]=\"datepickerOptions.hideIcon || datepickerOptions === false\"\n                     (click)=\"showDatepicker()\"\n                     class=\"input-group-addon\">\n                    <span [ngClass]=\"datepickerOptions.icon || 'glyphicon glyphicon-th'\"></span>\n                </div>\n            </div>\n            <div [ngClass]=\"{ 'input-group': !timepickerOptions.hideIcon, 'bootstrap-timepicker timepicker': true }\">\n                <input id=\"{{idTimePicker}}\" type=\"text\" class=\"form-control input-small\"\n                       [attr.readonly]=\"readonly\"\n                       [attr.required]=\"required\"\n                       [attr.placeholder]=\"timepickerOptions.placeholder || 'Set time'\"\n                       [attr.tabindex]=\"tabindex\"\n                       [(ngModel)]=\"timeModel\"\n                       (focus)=\"showTimepicker()\"\n                       (blur)=\"onTouched()\"\n                       (keyup)=\"checkEmptyValue($event)\">\n                <span [hidden]=\"timepickerOptions.hideIcon || false\" class=\"input-group-addon\">\n                    <i [ngClass]=\"timepickerOptions.icon || 'glyphicon glyphicon-time'\"></i>\n                </span>\n            </div>\n            <button *ngIf=\"hasClearButton\" type=\"button\" (click)=\"clearModels()\">Clear</button>\n        </div>\n    ",
+            styles: [
+                '.ng2-datetime *[hidden] { display: none; }'
+            ]
+        })
+    ], NKDatetime);
     return NKDatetime;
 }());
-__decorate([
-    core_1.Input('timepicker'),
-    __metadata("design:type", Object)
-], NKDatetime.prototype, "timepickerOptions", void 0);
-__decorate([
-    core_1.Input('datepicker'),
-    __metadata("design:type", Object)
-], NKDatetime.prototype, "datepickerOptions", void 0);
-__decorate([
-    core_1.Input('hasClearButton'),
-    __metadata("design:type", Boolean)
-], NKDatetime.prototype, "hasClearButton", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], NKDatetime.prototype, "readonly", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean)
-], NKDatetime.prototype, "required", void 0);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", String)
-], NKDatetime.prototype, "tabindex", void 0);
-__decorate([
-    core_1.HostListener('blur'),
-    __metadata("design:type", Object)
-], NKDatetime.prototype, "onTouched", void 0);
-__decorate([
-    core_1.HostBinding('attr.tabindex'),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [])
-], NKDatetime.prototype, "tabindexAttr", null);
-NKDatetime = __decorate([
-    core_1.Component({
-        selector: 'datetime',
-        providers: [CUSTOM_ACCESSOR],
-        template: "\n        <div class=\"ng2-datetime\">\n            <div [ngClass]=\"{ 'input-group': !datepickerOptions.hideIcon, 'date': true }\">\n                <input id=\"{{idDatePicker}}\" type=\"text\" class=\"form-control\"\n                       [attr.readonly]=\"readonly\"\n                       [attr.required]=\"required\"\n                       [attr.placeholder]=\"datepickerOptions.placeholder || 'Choose date'\"\n                       [attr.tabindex]=\"tabindex\"\n                       [(ngModel)]=\"dateModel\"\n                       (blur)=\"onTouched()\"\n                       (keyup)=\"checkEmptyValue($event)\"/>\n                <div [hidden]=\"datepickerOptions.hideIcon || datepickerOptions === false\"\n                     (click)=\"showDatepicker()\"\n                     class=\"input-group-addon\">\n                    <span [ngClass]=\"datepickerOptions.icon || 'glyphicon glyphicon-th'\"></span>\n                </div>\n            </div>\n            <div [ngClass]=\"{ 'input-group': !timepickerOptions.hideIcon, 'bootstrap-timepicker timepicker': true }\">\n                <input id=\"{{idTimePicker}}\" type=\"text\" class=\"form-control input-small\"\n                       [attr.readonly]=\"readonly\"\n                       [attr.required]=\"required\"\n                       [attr.placeholder]=\"timepickerOptions.placeholder || 'Set time'\"\n                       [attr.tabindex]=\"tabindex\"\n                       [(ngModel)]=\"timeModel\"\n                       (focus)=\"showTimepicker()\"\n                       (blur)=\"onTouched()\"\n                       (keyup)=\"checkEmptyValue($event)\">\n                <span [hidden]=\"timepickerOptions.hideIcon || false\" class=\"input-group-addon\">\n                    <i [ngClass]=\"timepickerOptions.icon || 'glyphicon glyphicon-time'\"></i>\n                </span>\n            </div>\n            <button *ngIf=\"hasClearButton\" type=\"button\" (click)=\"clearModels()\">Clear</button>\n        </div>\n    ",
-        styles: [
-            '.ng2-datetime *[hidden] { display: none; }'
-        ]
-    })
-], NKDatetime);
 exports.NKDatetime = NKDatetime;
 var id = 0;
 function uniqueId(prefix) {
