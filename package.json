@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "bootstrap": ">=3.0.0",
-    "bootstrap-datepicker": "1.7.0-RC1",
+    "bootstrap-datepicker": "github:phs92/bootstrap-datepicker",
     "bootstrap-timepicker": "^0.5.2",
     "jquery": ">=2.2.1"
   },
