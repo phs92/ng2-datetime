@@ -34,6 +34,13 @@ var NKDatetime = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    NKDatetime.prototype.updateValue = function () {
+        var newDate = new Date(this.dateModel);
+        newDate.setHours(this.date.getHours());
+        newDate.setMinutes(this.date.getMinutes());
+        newDate.setSeconds(this.date.getSeconds());
+        this.onChange(newDate);
+    };
     NKDatetime.prototype.ngAfterViewInit = function () {
         this.init();
     };
@@ -144,7 +151,7 @@ var NKDatetime = /** @class */ (function () {
                     if (meridian === 'AM' && hours === 12) {
                         hours = hours - 12;
                     }
-                    hours = parseInt(_this.pad(hours));
+                    hours = parseInt(_this.pad(hours), 10);
                 }
                 if (!isDate(_this.date)) {
                     _this.date = new Date();
@@ -224,7 +231,7 @@ var NKDatetime = /** @class */ (function () {
         core_1.Component({
             selector: 'datetime',
             providers: [CUSTOM_ACCESSOR],
-            template: "\n        <div class=\"form-inline ng2-datetime\">\n            <div [ngClass]=\"{ 'form-group': true, 'input-group': !datepickerOptions.hideIcon, 'date': true }\">\n                <input id=\"{{idDatePicker}}\" type=\"text\" class=\"form-control\"\n                       [attr.readonly]=\"readonly\"\n                       [attr.required]=\"required\"\n                       [attr.placeholder]=\"datepickerOptions.placeholder || 'Choose date'\"\n                       [attr.tabindex]=\"tabindex\"\n                       [(ngModel)]=\"dateModel\"\n                       (blur)=\"onTouched()\"\n                       (keyup)=\"checkEmptyValue($event)\"/>\n                <div [hidden]=\"datepickerOptions.hideIcon || datepickerOptions === false\"\n                     (click)=\"showDatepicker()\"\n                     class=\"input-group-addon\">\n                    <span [ngClass]=\"datepickerOptions.icon || 'glyphicon glyphicon-th'\"></span>\n                </div>\n            </div>\n            <div [ngClass]=\"{ 'form-group': true, 'input-group': !timepickerOptions.hideIcon, 'bootstrap-timepicker timepicker': true }\">\n                <input id=\"{{idTimePicker}}\" type=\"text\" class=\"form-control input-small\"\n                       [attr.readonly]=\"readonly\"\n                       [attr.required]=\"required\"\n                       [attr.placeholder]=\"timepickerOptions.placeholder || 'Set time'\"\n                       [attr.tabindex]=\"tabindex\"\n                       [(ngModel)]=\"timeModel\"\n                       (focus)=\"showTimepicker()\"\n                       (blur)=\"onTouched()\"\n                       (keyup)=\"checkEmptyValue($event)\">\n                <span [hidden]=\"timepickerOptions.hideIcon || false\" class=\"input-group-addon\">\n                    <i [ngClass]=\"timepickerOptions.icon || 'glyphicon glyphicon-time'\"></i>\n                </span>\n            </div>\n            <button *ngIf=\"hasClearButton\" type=\"button\" (click)=\"clearModels()\">Clear</button>\n        </div>\n    ",
+            template: "\n        <div class=\"form-inline ng2-datetime\">\n            <div [ngClass]=\"{ 'form-group': true, 'input-group': !datepickerOptions.hideIcon, 'date': true }\">\n                <input id=\"{{idDatePicker}}\" type=\"text\" class=\"form-control\"\n                       [attr.readonly]=\"readonly\"\n                       [attr.required]=\"required\"\n                       [attr.placeholder]=\"datepickerOptions.placeholder || 'Choose date'\"\n                       [attr.tabindex]=\"tabindex\"\n                       [(ngModel)]=\"dateModel\"\n                       (blur)=\"onTouched()\"\n                       (ngModelChange)=\"updateValue()\"\n                       (keyup)=\"checkEmptyValue($event)\"/>\n                <div [hidden]=\"datepickerOptions.hideIcon || datepickerOptions === false\"\n                     (click)=\"showDatepicker()\"\n                     class=\"input-group-addon\">\n                    <span [ngClass]=\"datepickerOptions.icon || 'glyphicon glyphicon-th'\"></span>\n                </div>\n            </div>\n            <div [ngClass]=\"{ 'form-group': true, 'input-group': !timepickerOptions.hideIcon, 'bootstrap-timepicker timepicker': true }\">\n                <input id=\"{{idTimePicker}}\" type=\"text\" class=\"form-control input-small\"\n                       [attr.readonly]=\"readonly\"\n                       [attr.required]=\"required\"\n                       [attr.placeholder]=\"timepickerOptions.placeholder || 'Set time'\"\n                       [attr.tabindex]=\"tabindex\"\n                       [(ngModel)]=\"timeModel\"\n                       (focus)=\"showTimepicker()\"\n                       (blur)=\"onTouched()\"\n                       (keyup)=\"checkEmptyValue($event)\">\n                <span [hidden]=\"timepickerOptions.hideIcon || false\" class=\"input-group-addon\">\n                    <i [ngClass]=\"timepickerOptions.icon || 'glyphicon glyphicon-time'\"></i>\n                </span>\n            </div>\n            <button *ngIf=\"hasClearButton\" type=\"button\" (click)=\"clearModels()\">Clear</button>\n        </div>\n    ",
             styles: [
                 '.ng2-datetime *[hidden] { display: none; }'
             ]
