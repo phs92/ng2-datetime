@@ -24,6 +24,7 @@ const CUSTOM_ACCESSOR = {
                        [attr.tabindex]="tabindex"
                        [(ngModel)]="dateModel"
                        (blur)="onTouched()"
+                       (ngModelChange)="updateValue()"
                        (keyup)="checkEmptyValue($event)"/>
                 <div [hidden]="datepickerOptions.hideIcon || datepickerOptions === false"
                      (click)="showDatepicker()"
@@ -82,6 +83,14 @@ export class NKDatetime implements ControlValueAccessor, AfterViewInit, OnDestro
     @HostBinding('attr.tabindex')
     get tabindexAttr(): string | undefined {
         return this.tabindex === undefined ? '-1' : undefined;
+    }
+
+    updateValue() {
+        let newDate = new Date(this.dateModel);
+        newDate.setHours(this.date.getHours());
+        newDate.setMinutes(this.date.getMinutes());
+        newDate.setSeconds(this.date.getSeconds());
+        this.onChange(newDate);
     }
 
     ngAfterViewInit() {
